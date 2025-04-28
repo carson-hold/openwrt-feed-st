@@ -7,14 +7,15 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_VERSION:=4.0.0-stm32mp-r1
-PKG_RELEASE:=1
+#PKG_VERSION:=4.0.0-stm32mp-r1
+PKG_VERSION:=4.0.0-stm32mp-r1-bp
+#PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/STMicroelectronics/optee_os.git
+PKG_SOURCE_URL:=https://e.coding.net/holdiot/openwrt-stm32mp/stm32mp-optee_os.git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
-PKG_MIRROR_HASH:=a61a8dcf2e374ce7ce40875ccf634cbdfdd4881e381b7afa2e1a05a991bea5c4
-PKG_MAINTAINER:=Thomas Richard <thomas.richard@bootlin.com>
+#PKG_SOURCE_URL:=https://github.com/STMicroelectronics/optee_os.git
+PKG_MIRROR_HASH:=skip
 
 OPTEE_USE_INTREE_DTC:=1
 
@@ -50,6 +51,19 @@ define Optee-os/stm32mp135f-dk
   PLAT_FLAVOR:=135F_DK
 endef
 
+define Optee-os/bp-stm32mp135d-256m
+  $(call Optee-os/stm32mp1)
+  NAME:=BP-STM32MP135D-256M
+  PLAT_FLAVOR:=135D_BP_256M
+endef
+
+define Optee-os/bp-stm32mp135d-512m
+  $(call Optee-os/stm32mp1)
+  NAME:=BP-STM32MP135D-512M
+  PLAT_FLAVOR:=135D_BP_512M
+endef
+
+
 define Optee-os/stm32mp257f-ev1
   $(call Optee-os/stm32mp2)
   NAME:=STM32MP257F-EV1
@@ -64,10 +78,12 @@ endef
 
 
 OPTEE_TARGETS := \
-	stm32mp157f-dk2 \
-	stm32mp135f-dk \
-	stm32mp257f-ev1 \
-	stm32mp257f-dk
+  stm32mp157f-dk2 \
+  stm32mp135f-dk \
+  bp-stm32mp135d-256m \
+  bp-stm32mp135d-512m \
+  stm32mp257f-ev1 \
+  stm32mp257f-dk
 
 define Package/optee-os/install/default
 endef

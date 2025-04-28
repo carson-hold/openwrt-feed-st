@@ -7,14 +7,13 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_VERSION:=2023.10-stm32mp-r1
-PKG_RELEASE:=1
+PKG_VERSION:=2023.10-stm32mp-r1-bp
+#PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/STMicroelectronics/u-boot.git
+PKG_SOURCE_URL:=https://e.coding.net/holdiot/openwrt-stm32mp/stm32mp-u-boot.git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
-PKG_MIRROR_HASH:=06621bcf405d06d54cd95883287aec08f370ed55ca9a5b4fa20c92df0c30fd4b
-PKG_MAINTAINER:=Thomas Richard <thomas.richard@bootlin.com>
+PKG_MIRROR_HASH:=skip
 
 UBOOT_USE_INTREE_DTC:=1
 
@@ -53,6 +52,13 @@ define U-Boot/stm32mp135f-dk
   DEVICE_TREE:=stm32mp135f-dk
 endef
 
+define U-Boot/bp-stm32mp135d-256m
+  $(call U-Boot/stm32mp13)
+  NAME:=BP-STM32MP135D-256M
+  DEVICE_TREE:=bp-stm32mp135d-256m
+  UBOOT_CONFIG:=bp-stm32mp135d-256m
+endef
+
 define U-Boot/stm32mp257f-ev1
   $(call U-Boot/stm32mp25)
   NAME:=STM32MP257F-EV1
@@ -68,6 +74,7 @@ endef
 UBOOT_TARGETS := \
 	stm32mp157f-dk2 \
 	stm32mp135f-dk \
+  bp-stm32mp135d-256m \
 	stm32mp257f-ev1 \
 	stm32mp257f-dk
 

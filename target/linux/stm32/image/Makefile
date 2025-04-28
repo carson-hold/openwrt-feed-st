@@ -78,6 +78,38 @@ define Device/stm32mp135f-dk
   SUPPORTED_DEVICES := st,stm32mp135f-dk
 endef
 
+define Device/bp-stm32mp135d-256m
+  $(call Device/stm32mp1)
+
+  DEVICE_MODEL := BP-STM32MP135D-256M
+  DEVICE_DTS := bp-stm32mp135d-256m
+  SUPPORTED_DEVICES := st,bp-stm32mp135d-256m
+
+  DEVICE_TYPE := nand
+  FILESYSTEMS := squashfs ubifs
+  DEVICE_PACKAGES += mtd-utils ubi-utils kmod-mtd-rw kmod-mtd-spi-nand kmod-fs-ubifs
+  PAGESIZE := 2048
+  BLOCKSIZE := 128k
+
+  KERNEL_LOADADDR := 0xc2000000
+
+	KERNEL_SUFFIX := -zImage.itb
+	# KERNEL = kernel-bin | lzma | fit lzma $$(KDIR)/image-$$(DEVICE_DTS).dtb
+  KERNEL = kernel-bin | fit none $$(KDIR)/image-$$(DEVICE_DTS).dtb
+	KERNEL_NAME := zImage  
+
+
+  UBOOTENV_IN_UBI := 1
+	KERNEL_IN_UBI := 1
+
+	IMAGES := factory.ubi sysupgrade.bin
+	IMAGE/factory.ubi := append-ubi
+	IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+
+  # MKUBIFS_ARGS := -m $(PAGESIZE) -e 126976 -c 2048
+  # UBINIZE_ARGS := -m $(PAGESIZE) -p $(BLOCKSIZE)
+endef
+
 define Device/stm32mp257f-ev1
   $(call Device/stm32mp2)
   DEVICE_MODEL := STM32MP257F-EV1
@@ -99,7 +131,8 @@ endef
 ifeq ($(SUBTARGET),stm32mp1)
   TARGET_DEVICES += \
 		    stm32mp157f-dk2 \
-		    stm32mp135f-dk
+		    stm32mp135f-dk \
+        bp-stm32mp135d-256m
 endif
 
 ifeq ($(SUBTARGET),stm32mp2)

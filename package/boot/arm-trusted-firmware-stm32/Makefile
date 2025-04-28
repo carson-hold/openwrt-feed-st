@@ -7,15 +7,13 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_VERSION:=2.10-stm32mp-r1
-PKG_RELEASE:=1
+PKG_VERSION:=2.10-stm32mp-r1-bp
+#PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/STMicroelectronics/arm-trusted-firmware.git
+PKG_SOURCE_URL:=https://e.coding.net/holdiot/openwrt-stm32mp/stm32mp-arm-trusted-firmware.git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
-PKG_MIRROR_HASH:=7af0d84c464f7a51e4ef727962b50c1a8d42e70518ae3330b1b5d6b3399b0c3f
-
-PKG_MAINTAINER:=Thomas Richard <thomas.richard@bootlin.com>
+PKG_MIRROR_HASH:=skip
 
 include $(INCLUDE_DIR)/kernel.mk
 include $(INCLUDE_DIR)/trusted-firmware-a.mk
@@ -55,6 +53,20 @@ define Trusted-Firmware-A/stm32mp135f-dk
   DTB_FILE_NAME=stm32mp135f-dk.dtb
 endef
 
+define Trusted-Firmware-A/bp-stm32mp135d-256m
+  $(call Trusted-Firmware-A/stm32mp1)
+  NAME:=BP-STM32MP135D-256M
+  DTB_FILE_NAME=bp-stm32mp135d-256m.dtb
+  MAKE_ARGS += STM32MP_SPI_NAND=1
+endef
+
+define Trusted-Firmware-A/bp-stm32mp135d-512m
+  $(call Trusted-Firmware-A/stm32mp1)
+  NAME:=BP-STM32MP135D-512M
+  DTB_FILE_NAME=bp-stm32mp135d-512m.dtb
+  MAKE_ARGS += STM32MP_SDMMC=1
+endef
+
 define Trusted-Firmware-A/stm32mp257f-ev1
   $(call Trusted-Firmware-A/stm32mp2)
   NAME:=STM32MP257F-EV1
@@ -72,6 +84,7 @@ endef
 TFA_TARGETS := \
 	       stm32mp157f-dk2 \
 	       stm32mp135f-dk \
+         bp-stm32mp135d-256m \
 	       stm32mp257f-ev1 \
 	       stm32mp257f-dk
 
@@ -83,7 +96,6 @@ TFA_MAKE_FLAGS += \
 		BL33=$(STAGING_DIR_IMAGE)/$(BUILD_VARIANT)-u-boot.bin \
 		BL33_CFG=$(STAGING_DIR_IMAGE)/$(BUILD_VARIANT)-u-boot.dtb \
 		DTB_FILE_NAME=$(DTB_FILE_NAME) \
-		STM32MP_SDMMC=1 \
 		TARGET_BOARD="" \
 		$(MAKE_ARGS) \
 		all fip
