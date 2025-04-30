@@ -11,7 +11,7 @@ PKG_VERSION:=2.10-stm32mp-r1-bp
 #PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://e.coding.net/holdiot/openwrt-stm32mp/stm32mp-arm-trusted-firmware.git
+PKG_SOURCE_URL:=https://e.coding.net/holdiot/openwrt-stm32mp/trusted-firmware-a-2.10-stm32mp-r1.git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_MIRROR_HASH:=skip
 

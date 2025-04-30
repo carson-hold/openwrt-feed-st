@@ -12,7 +12,7 @@ PKG_VERSION:=4.0.0-stm32mp-r1-bp
 #PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://e.coding.net/holdiot/openwrt-stm32mp/stm32mp-optee_os.git
+PKG_SOURCE_URL:=https://e.coding.net/holdiot/openwrt-stm32mp/optee-os-4.0.0-stm32mp-r1.git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
 #PKG_SOURCE_URL:=https://github.com/STMicroelectronics/optee_os.git
 PKG_MIRROR_HASH:=skip
